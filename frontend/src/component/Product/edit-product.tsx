@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { useState, useMemo, ChangeEvent } from "react";
+import { useState, useMemo, ChangeEvent, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -12,9 +12,9 @@ import { updateProduct } from "../../utils/api/product";
 import { QUERY_KEYS } from "../../utils/keys";
 
 interface State {
-  name?: string;
-  description?: string;
-  price?: string;
+  name: string;
+  description: string;
+  price: string;
 }
 
 interface ErrorMessage {
@@ -32,6 +32,12 @@ export const EditProductPage = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
+  const [data, setData] = useState<State>({
+    name: "",
+    description: "",
+    price: "",
+  });
+
   const [errorMessage, setErrorMessage] = useState({
     name: initialErrorState,
     description: initialErrorState,
@@ -48,11 +54,15 @@ export const EditProductPage = () => {
   const { data: product, isLoading: isLoadingProduct } =
     useProductDetail(productId);
 
-  const [data, setData] = useState<State>({
-    name: product?.name,
-    description: product?.description,
-    price: product?.price,
-  });
+  useEffect(() => {
+    if (product) {
+      setData({
+        name: product.name,
+        description: product.description,
+        price: product.price,
+      });
+    }
+  }, [product]);
 
   const { mutate, isLoading: isCreateLoadingProduct } = useMutation({
     mutationFn: async (data: State): Promise<any> =>

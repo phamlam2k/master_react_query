@@ -17,7 +17,13 @@ export const Pagination = ({
 }: Props) => {
   return (
     <div className="flex gap-[20px] mx-auto w-fit mt-[20px]">
-      <button className="border-[1px] border-[#808080] w-[80px] cursor-pointer">
+      <button
+        className={`border-[1px] border-[#808080] w-[80px] ${
+          page !== 1 ? "cursor-pointer" : "cursor-not-allowed"
+        }`}
+        onClick={() => handleChangePage(page - 1)}
+        disabled={page === 1}
+      >
         Previous
       </button>
       <div className="flex gap-[10px]">
@@ -35,7 +41,13 @@ export const Pagination = ({
             </button>
           ))}
       </div>
-      <button className="border-[1px] border-[#808080] w-[80px] cursor-pointer">
+      <button
+        className={`border-[1px] border-[#808080] w-[80px] ${
+          page !== totalPages ? "cursor-pointer" : "cursor-not-allowed"
+        }`}
+        onClick={() => handleChangePage(page + 1)}
+        disabled={page === totalPages}
+      >
         Next
       </button>
     </div>

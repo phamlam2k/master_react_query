@@ -46,10 +46,10 @@ export const getProductDetail = async (id: string): Promise<IProductItem> => {
 };
 
 export const updateProduct = async (data: {
-  id?: string;
-  name?: string;
-  price?: string;
-  description?: string;
+  id: string;
+  name: string;
+  price: string;
+  description: string;
 }) => {
   const response = await axiosInstance.patch(
     `${API_BASE_URL}/api/collections/product/records/${data.id}`,

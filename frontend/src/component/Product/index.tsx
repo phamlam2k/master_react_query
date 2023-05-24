@@ -5,10 +5,10 @@ import { Link, useSearchParams } from "react-router-dom";
 
 import { useProductList } from "../../hooks/useProductList";
 import { IProductItem } from "../../models/api";
+import { Pagination } from "../../common/pagination";
 
 import { deleteProduct } from "../../utils/api/product";
 import { QUERY_KEYS } from "../../utils/keys";
-import { Pagination } from "../../common/pagination";
 
 export const ProductListPage = () => {
   const queryClient = useQueryClient();
@@ -21,6 +21,7 @@ export const ProductListPage = () => {
     searchParams.get("limit") ? Number(searchParams.get("limit")) : 5
   );
 
+  // Hàm thao tác gọi product list
   const {
     data: product_list,
     isLoading: isLoadingProduct,
@@ -34,6 +35,7 @@ export const ProductListPage = () => {
     },
   });
 
+  // Hàm thao tác xoá product
   const handleDelete = (id: string) => {
     mutate(id);
   };
@@ -79,40 +81,42 @@ export const ProductListPage = () => {
             </tr>
           </thead>
           <tbody>
-            {product_list &&
-              product_list.items.map((product: IProductItem) => (
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+            {product_list.items.map((product: IProductItem) => (
+              <tr
+                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                key={product.id}
+              >
+                <th
+                  scope="row"
+                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                >
+                  {product.name}
+                </th>
+                <td className="px-6 py-4">{product.description}</td>
+                <td className="px-6 py-4">{product.price}</td>
+                <td className="flex items-center px-6 py-4 text-[#FFFFFF] gap-[10px] justify-center">
+                  <Link
+                    to={`product/${product.id}`}
+                    className="py-[5px] px-[10px] bg-green-400"
                   >
-                    {product.name}
-                  </th>
-                  <td className="px-6 py-4">{product.description}</td>
-                  <td className="px-6 py-4">{product.price}</td>
-                  <td className="flex items-center px-6 py-4 text-[#FFFFFF] gap-[10px] justify-center">
-                    <Link
-                      to={`product/${product.id}`}
-                      className="py-[5px] px-[10px] bg-green-400"
-                    >
-                      Detail
-                    </Link>
-                    <Link
-                      to={`edit_product/${product.id}`}
-                      className="py-[5px] px-[10px] bg-blue-400"
-                    >
-                      Edit
-                    </Link>
-                    <button
-                      onClick={() => handleDelete(product.id)}
-                      disabled={isLoadingDeleteProduct}
-                      className="py-[5px] px-[10px] bg-red-400"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
+                    Detail
+                  </Link>
+                  <Link
+                    to={`edit_product/${product.id}`}
+                    className="py-[5px] px-[10px] bg-blue-400"
+                  >
+                    Edit
+                  </Link>
+                  <button
+                    onClick={() => handleDelete(product.id)}
+                    disabled={isLoadingDeleteProduct}
+                    className="py-[5px] px-[10px] bg-red-400"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

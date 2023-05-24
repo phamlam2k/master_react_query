@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { IProductItem, IProductItemDataRepsonse } from "../../models/api";
+import { IProductItem } from "../../models/api";
 import { createProduct } from "../../utils/api/product";
 import { QUERY_KEYS } from "../../utils/keys";
 
@@ -57,7 +57,7 @@ export const CreateProductPage = () => {
         );
 
         toast.success("Create Product successfully");
-        navigate(`/product/${res.data.id}`, { replace: true });
+        navigate(`/`);
 
         return { previousTodos };
       }

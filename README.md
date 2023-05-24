@@ -5,6 +5,18 @@
 - Frontend:
   - Vào thư mục frontend, chạy terminal: npm run dev
 
+## Folders
+
+- Frontend:
+  - src:
+    - common: Thư mục dùng để xài chung các custom components.
+      - axios: Thư mục config axios.
+      - pagination: Sử dụng pagination.
+    - component: Thư mục thao tác các màn hình về product
+    - hooks: Thư mục sử dụng useQuery function gọi data.
+    - models: Thư mục lưu interface typescript.
+    - utils: Thư mục lưu hàm gọi api vào thao tác function dùng chung.
+
 ## React Query là gì?
 
 TanStack Query (tên mới) hay React Query là thư viện giúp quản lý các state bất đồng bộ như data từ api.
